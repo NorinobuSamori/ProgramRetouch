@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="beans.ItemDataBeans"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="beans.BuyDataBeans"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>購入確認</title>
-<jsp:include page="/baselayout/head.html" />
-<%
-	ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
-	BuyDataBeans bdb = (BuyDataBeans) session.getAttribute("bdb");
-%>
+		<%@ page import="beans.ItemDataBeans"%>
+		<%@ page import="java.util.ArrayList"%>
+		<%@ page import="beans.BuyDataBeans"%>
+		<!DOCTYPE html>
+		<html>
+		<head>
+		<meta charset="UTF-8">
+		<title>購入確認</title>
+		<jsp:include page="/baselayout/head.html" />
+		<%
+			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
+			BuyDataBeans bdb = (BuyDataBeans) session.getAttribute("bdb");
+
+		%>
 </head>
 <body>
 	<jsp:include page="/baselayout/header.jsp" />
@@ -56,7 +57,7 @@
 									<tr>
 										<td class="center"></td>
 										<td class="center">合計</td>
-										<td class="center"><%=bdb.getTotalPrice()%>円</td>
+										<td class="center"><%= bdb.getTotalPrice() %>円</td>
 									</tr>
 								</tbody>
 							</table>

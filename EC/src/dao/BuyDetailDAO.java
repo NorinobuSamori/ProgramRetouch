@@ -98,7 +98,8 @@ public class BuyDetailDAO {
 			st = con.prepareStatement(
 					"SELECT m_item.id,"
 					+ " m_item.name,"
-					+ " m_item.price"
+					+ " m_item.price,"
+					+ " m_item.detail"
 					+ " FROM t_buy_detail"
 					+ " JOIN m_item"
 					+ " ON t_buy_detail.item_id = m_item.id"
@@ -113,7 +114,8 @@ public class BuyDetailDAO {
 				idb.setId(rs.getInt("id"));
 				idb.setName(rs.getString("name"));
 				idb.setPrice(rs.getInt("price"));
-
+				idb.setDetail(rs.getString("detail"));
+System.out.println(rs.getString("detail"));
 
 				buyDetailItemList.add(idb);
 			}
