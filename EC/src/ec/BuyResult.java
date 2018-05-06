@@ -38,6 +38,7 @@ public class BuyResult extends HttpServlet {
 
 			// 購入情報を登録
 			int buyId = BuyDAO.insertBuy(bdb);
+
 			// 購入詳細情報を購入情報IDに紐づけして登録
 			for (ItemDataBeans cartInItem : cart) {
 				BuyDetailDataBeans bddb = new BuyDetailDataBeans();
@@ -49,18 +50,20 @@ public class BuyResult extends HttpServlet {
 
 			/* ====購入完了ページ表示用==== */
 			BuyDataBeans resultBDB = BuyDAO.getBuyDataBeansByBuyId(buyId);
-			request.setAttribute("resultBDB", resultBDB);
+			session.setAttribute("resultBDB", resultBDB);
 
 			// 購入アイテム情報
 			ArrayList<ItemDataBeans> buyIDBList = BuyDetailDAO.getItemDataBeansListByBuyId(buyId);
-			request.setAttribute("buyIDBList", buyIDBList);
+			session.setAttribute("buyIDBList", buyIDBList);
 
 			// 購入完了ページ
 			request.getRequestDispatcher(EcHelper.BUY_RESULT_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("エラーメッセージin BuyResults");
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}
 	}
 }
+

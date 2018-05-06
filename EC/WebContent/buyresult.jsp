@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	page import="beans.ItemDataBeans"%>
 <%@ page import="beans.DeliveryMethodDataBeans"%>
 <%@ page import="beans.BuyDataBeans"%>
@@ -9,10 +10,7 @@
 <meta charset="UTF-8">
 <title>購入完了</title>
 <jsp:include page="/baselayout/head.html" />
-<%
-	ArrayList<ItemDataBeans> buyIDBList = (ArrayList<ItemDataBeans>) request.getAttribute("buyIDBList");
-	BuyDataBeans resultBDB = (BuyDataBeans) request.getAttribute("resultBDB");
-%>
+
 </head>
 <body>
 	<jsp:include page="/baselayout/header.jsp" />
@@ -51,9 +49,9 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td class="center"><%=resultBDB.getFormatDate()%></td>
-									<td class="center"><%=resultBDB.getDeliveryMethodName()%></td>
-									<td class="center"><%=resultBDB.getTotalPrice()%>円</td>
+									<td class="center">${resultBDB.getFormatDate()}</td>
+									<td class="center">${resultBDB.getDeliveryMethodName()}</td>
+									<td class="center">${resultBDB.getTotalPrice()}円</td>
 								</tr>
 							</tbody>
 						</table>
@@ -74,19 +72,15 @@
 								</tr>
 							</thead>
 							<tbody>
-								<%
-									for (ItemDataBeans buyIDB : buyIDBList) {
-								%>
+								<c:forEach var="buyIDB" items="${buyIDBList}" begin="0" >
+									<tr>
+										<td class="center">${buyIDB.getName()}</td>
+										<td class="center">${buyIDB.getPrice()}円</td>
+									</tr>
+		                		</c:forEach>
 								<tr>
-									<td class="center"><%=buyIDB.getName()%></td>
-									<td class="center"><%=buyIDB.getPrice()%>円</td>
-								</tr>
-								<%
-									}
-								%>
-								<tr>
-									<td class="center"><%=resultBDB.getDeliveryMethodName()%></td>
-									<td class="center"><%=resultBDB.getDeliveryMethodPrice()%>円</td>
+									<td class="center">${resultBDB.getDeliveryMethodName()}</td>
+									<td class="center">${resultBDB.getDeliveryMethodPrice()}円</td>
 								</tr>
 							</tbody>
 						</table>

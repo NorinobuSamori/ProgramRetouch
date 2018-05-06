@@ -132,4 +132,32 @@ System.out.println(rs.getString("detail"));
 		}
 	}
 
+	public ArrayList<BuyDetailDataBeans> getBuyIdDistinct() throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
+
+			st = con.prepareStatement("SELECT DISTINCT buy_id FROM t_buy_detail");
+			ResultSet rs = st.executeQuery();
+
+			ArrayList<BuyDetailDataBeans> buyIdList = new ArrayList<BuyDetailDataBeans>();
+
+			while (rs.next()) {
+				BuyDetailDataBeans bddb = new BuyDetailDataBeans();
+				bddb.setBuyId(rs.getInt("buy_id"));
+				buyIdList.add(bddb);
+			}
+
+			System.out.println("searching BuyDetailDataBeansList with DISTINCT has been completed");
+			return buyIdList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 }
