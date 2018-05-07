@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BuyDataBeans;
-import beans.BuyDetailDataBeans;
-import beans.ItemDataBeans;
 import beans.UserDataBeans;
 import dao.BuyDAO;
-import dao.BuyDetailDAO;
 import dao.UserDAO;
 
 /**
@@ -49,30 +46,19 @@ public class UserData extends HttpServlet {
 
 
 
-			BuyDetailDAO buyDetailDAO = new BuyDetailDAO();
-			ArrayList<BuyDetailDataBeans> buyIdList = buyDetailDAO.getBuyIdDistinct();////Integerを使うと例のエラーが発生
-			session.setAttribute("buyIdList", buyIdList);
+			BuyDAO buyDAO = new BuyDAO();
+			ArrayList<BuyDataBeans> UserDataBeansList = buyDAO.getBuyDataBeansWhereUser_Id(userId);
 
-			int size = buyIdList.size();
-			ArrayList<BuyDataBeans> resultBDBList = new ArrayList<BuyDataBeans>();
-			for(BuyDetailDataBeans bddb : buyIdList){
+			for(BuyDataBeans udbList : UserDataBeansList ) {
+				System.out.println(udbList.getStrDate());
 
-				/* ====購入完了ページ表示用==== */
-				BuyDataBeans resultBDB = BuyDAO.getBuyDataBeansByBuyId(bddb.getBuyId());////(buyIdList.getBuyId);ではない
-				resultBDBList.add(resultBDB);
-				session.setAttribute("resultBDBList", resultBDBList);
-				// 購入アイテム情報
-				ArrayList<ItemDataBeans> buyIDBList = buyDetailDAO.getItemDataBeansListByBuyId(bddb.getBuyId());
-				session.setAttribute("buyIDBList", buyIDBList);
 			}
+			session.setAttribute("UserDataBeansList", UserDataBeansList);
 
 
-			BuyDetailDataBeans bddb = new BuyDetailDataBeans();
-			for(int i = 0 ; i < buyIdList.size() ; i++ ){
-				System.out.print(buyIdList.get(i).getBuyId()+"  ");
-				System.out.print(resultBDBList.get(i).getFormatDate());
-				System.out.println();
-			}
+
+
+
 
 
 			request.getRequestDispatcher(EcHelper.USER_DATA_PAGE).forward(request, response);
@@ -85,3 +71,4 @@ public class UserData extends HttpServlet {
 	}
 
 }
+

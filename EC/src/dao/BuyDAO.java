@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 
 import base.DBManager;
 import beans.BuyDataBeans;
@@ -100,4 +102,54 @@ public class BuyDAO {
 		}
 	}
 
+	public static ArrayList<BuyDataBeans> getBuyDataBeansWhereUser_Id(int user_id) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
+
+			ArrayList<BuyDataBeans> bdbList = new ArrayList<BuyDataBeans>();
+
+			st = con.prepareStatement(
+					"SELECT * FROM t_buy"
+							+ " inner join m_delivery_method"
+							+ " on delivery_method_id = m_delivery_method.id"
+							+ " WHERE user_id = ?");
+			st.setInt(1, user_id);
+
+			ResultSet rs = st.executeQuery();
+
+
+
+
+			while (rs.next()) {
+				int id1 = rs.getInt("id");
+				int user_id1 = rs.getInt("user_id");
+                int total_price = rs.getInt("total_price");
+                int delivery_method_id = rs.getInt("delivery_method_id");
+                Date create_date = rs.getTimestamp("create_date");
+                int id_1 = rs.getInt("m_delivery_method.id");
+                String name = rs.getString("name");
+                int price = rs.getInt("price");
+                BuyDataBeans bdb11 = new BuyDataBeans(id1, user_id1,  total_price, delivery_method_id , create_date,id_1, name, price);
+                bdbList.add(bdb11);
+
+                System.out.println(create_date);
+			}
+
+
+
+
+			System.out.println("searching BuyDataBeans by USER_ID has been completed");
+
+			return bdbList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 }

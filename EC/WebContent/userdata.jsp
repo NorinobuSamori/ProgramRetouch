@@ -17,7 +17,7 @@
 		UserDataBeans udb = (UserDataBeans)request.getAttribute("udb");
 
 		ArrayList<BuyDetailDataBeans> buyIdList = (ArrayList<BuyDetailDataBeans>) session.getAttribute("buyIdList");
-
+		ArrayList<BuyDataBeans> resultBDBList = new ArrayList<BuyDataBeans>();
 	%>
 	</head>
 	<body>
@@ -79,18 +79,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									<%
-										for(int i = 0 ; i < buyIdList.size() ; i++ ){
-									%>
-											<tr>
-												<td class="center"><a href="UserBuyHistoryDetail?buy_id=${buyIdList.get(i).buyId}" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-												<td class="center">${resultBDBList.get(i).getFormatDate()}</td>
-												<td class="center">${resultBDBList.get(i).getDeliveryMethodName()}</td>
-												<td class="center">${resultBDBList.get(i).getTotalPrice()}円</td>
-											</tr>
-									<%
-										}
-				                	%>
+									<c:forEach var="udbList" items="${UserDataBeansList}" begin="0" >
+										<tr>
+											<td class="center"><a href="UserBuyHistoryDetail?buy_id=${udbList.id}" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
+											<td class="center">${udbList.formatDate}</td>
+											<td class="center">${udbList.deliveryMethodName}</td>
+											<td class="center">${udbList.totalPrice}円</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
