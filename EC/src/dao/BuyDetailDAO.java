@@ -23,11 +23,11 @@ public class BuyDetailDAO {
 	 * 			呼び出し元にスローさせるため
 	 */
 	public static void insertBuyDetail(BuyDetailDataBeans bddb) throws SQLException {
-		Connection con = null;
+		Connection conn = null;
 		PreparedStatement st = null;
 		try {
-			con = DBManager.getConnection();
-			st = con.prepareStatement(
+			conn = DBManager.getConnection();
+			st = conn.prepareStatement(
 					"INSERT INTO t_buy_detail(buy_id,item_id) VALUES(?,?)");
 			st.setInt(1, bddb.getBuyId());
 			st.setInt(2, bddb.getItemId());
@@ -38,8 +38,8 @@ public class BuyDetailDAO {
 			System.out.println(e.getMessage());
 			throw new SQLException(e);
 		} finally {
-			if (con != null) {
-				con.close();
+			if (conn != null) {
+				conn.close();
 			}
 		}
 	}
@@ -115,7 +115,7 @@ public class BuyDetailDAO {
 				idb.setName(rs.getString("name"));
 				idb.setPrice(rs.getInt("price"));
 				idb.setDetail(rs.getString("detail"));
-System.out.println(rs.getString("detail"));
+																						System.out.println(rs.getString("detail"));
 
 				buyDetailItemList.add(idb);
 			}

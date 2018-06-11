@@ -50,6 +50,16 @@ public class ItemSearchResult extends HttpServlet {
 			request.setAttribute("pageNum", pageNum);
 			request.setAttribute("itemList", searchResultItemList);
 
+
+			System.out.println();
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println();
+			System.out.println("searchWord" +" = "+ searchWord);
+			System.out.println("itemCount" +" = "+ itemCount);
+			System.out.println("pageMax" +" = "+ pageMax);
+			System.out.println("pageNum" +" = "+ pageNum);
+			System.out.println("searchResultItemList" +" = "+ searchResultItemList);
+
 			request.getRequestDispatcher(EcHelper.SEARCH_RESULT_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

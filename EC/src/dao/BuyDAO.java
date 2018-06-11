@@ -38,9 +38,9 @@ public class BuyDAO {
 			st.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 			st.executeUpdate();
 
-			ResultSet rs = st.getGeneratedKeys();
-			if (rs.next()) {
-				autoIncKey = rs.getInt(1);
+			ResultSet rs = st.getGeneratedKeys();////これでStatement.RETURN_GENERATED_KEYSを取得している
+			if (rs.next()) {////nullを想定しているものではないので要注意※
+				autoIncKey = rs.getInt(1);////なぜgetInt(1);なのかは謎。これは後回しにする。
 			}
 			System.out.println("inserting buy-datas has been completed");
 
@@ -111,10 +111,7 @@ public class BuyDAO {
 			ArrayList<BuyDataBeans> bdbList = new ArrayList<BuyDataBeans>();
 
 			st = con.prepareStatement(
-					"SELECT * FROM t_buy"
-							+ " inner join m_delivery_method"
-							+ " on delivery_method_id = m_delivery_method.id"
-							+ " WHERE user_id = ?");
+					"SELECT * FROM t_buy inner join m_delivery_method on delivery_method_id = m_delivery_method.id WHERE user_id = ?");
 			st.setInt(1, user_id);
 
 			ResultSet rs = st.executeQuery();

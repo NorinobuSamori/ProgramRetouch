@@ -6,12 +6,12 @@ import java.util.Date;
 
 public class BuyDataBeans  implements Serializable {
 	private int id;
+	private int id_1;
 	private int userId;
 	private int totalPrice;
 	private int delivertMethodId;
 	private Date buyDate;
 	private String strDate;
-	private int id_1;
 	private String deliveryMethodName;
 	private int deliveryMethodPrice;
 
@@ -26,7 +26,6 @@ public class BuyDataBeans  implements Serializable {
 
 
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy年MM月dd日HH時mm分");
-
 		this.strDate = sdf1.format(buyDate);
 		this.buyDate = buyDate;
 
